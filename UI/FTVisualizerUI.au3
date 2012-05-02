@@ -15,9 +15,7 @@
 Global $msg,$guiW=685,$guiH=380
 
 $gui = GUICreate("FTVisualizer", $guiW, $guiH, -1, -1, -1, $WS_EX_TOPMOST)
-;GUISetBkColor(0xCCBA96)
-	$Pic=GUICtrlCreatePic("b1.jpg", 0, 0, $guiW, $guiH)
-	GUICtrlSetState($Gui,$GUI_DISABLE)
+GUISetBkColor(0xCCBA96)
 
 GUICtrlCreateLabel("FTVisualizer",10,10,120)
 GUICtrlSetFont(-1, 15,800)
@@ -100,7 +98,7 @@ while 1
 WEnd
     GUISetState(@SW_HIDE)
 
-; this func to make that unchecked table not writeable
+; updates ui elements (disable/enable)
 Func _update()
 	If GUICtrlRead($gBirth) = $GUI_UNCHECKED  And GUICtrlGetState($gBirthDate) = 80 Then
 		GUICtrlSetState($gBirthDate, $GUI_DISABLE)
@@ -144,12 +142,12 @@ Func _update()
 	EndIf
 EndFunc
 
-
+;adds an event to the edit box
 Func _add()
 	$results = GUICtrlRead($gEdit)
 	If $results <> "" Then $results &= @CRLF
 
-	; birth add it in box
+	; adds birth info to edit box
 	If GUICtrlRead($gBirth) = $GUI_CHECKED Then
 		$results &= GUICtrlRead($gBirthDate) & ",1," & GUICtrlRead($gBirthName) & "," & GUICtrlRead($gBirthGender) & ","
 		If GUICtrlRead($gBirthFather) = "" Then
@@ -163,7 +161,7 @@ Func _add()
 			$results &= GUICtrlRead($gBirthMother)
 		EndIf
 
-	; marriage add it in box
+	; adds marriage info to edit box
 	ElseIf GUICtrlRead($gMarriage) = $GUI_CHECKED Then
 		$results &= GUICtrlRead($gMarriageDate) & ",2," & GUICtrlRead($gMarriageName) & "," & GUICtrlRead($gMarriagePartner) & ","
 		If GUICtrlRead($gMarriageBirthday) = "" Then
@@ -172,11 +170,11 @@ Func _add()
 			$results &= GUICtrlRead($gMarriageBirthday)
 		EndIf
 
-	; divorce add it in box
+	; adds divorce info to edit box
 	ElseIf GUICtrlRead($gDivorce) = $GUI_CHECKED Then
 		$results &= GUICtrlRead($gDivorceDate) & ",3," & GUICtrlRead($gDivorceName) & "," & GUICtrlRead($gDivorcePartner)
 
-	; death add it in box
+	; adds death info to edit box
 	ElseIf GUICtrlRead($gDeath) = $GUI_CHECKED Then
 		$results &= GUICtrlRead($gDeathDate) & ",4," & GUICtrlRead($gDeathName)
 	EndIf
